@@ -8,9 +8,9 @@ class Whim < Formula
     depends_on "python@3.9"
   
     def install
-      bin.install "whim.py" => "whim"
-      libexec.install Dir["templates"] # Install the templates directory
-      bin.env_script_all_files(libexec/"bin", PYTHONPATH: ENV["PYTHONPATH"] + ":#{libexec}")
+      libexec.install Dir["*"]
+      chmod "+x", libexec/"whim.py"  # Ensure the script is executable
+      (bin/"whim").write_env_script libexec/"whim.py", PYTHONPATH: "#{libexec}/lib/python3.9/site-packages"
     end
   
     test do
